@@ -7,7 +7,7 @@ include("includes/head.php")
 </style>
 
 <?php
-include('includes/header_david.php');
+include('includes/header_inscription.php');
 ?>
 
 
