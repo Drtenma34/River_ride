@@ -2,10 +2,10 @@
 
 try {
     $bdd = new PDO(
-        'mysql:host=51.178.29.98; 
-        dbname=projet',
+        'mysql:host=5.196.27.192; 
+        dbname=Riverride',
         'root',
-        'mysql_root_mdp',
+        'MysqlRootRiverSide',
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
 } catch (Exception $e) {

@@ -14,31 +14,27 @@
     <?php include("css/inscription_et_connexion.css"); ?>
 </style>
 
+
+<body>
 <?php
 include('includes/header_david.php');
 ?>
-
-<body >
-<div>
-  
-</div>
     <main>
-        
+
         <?php
 
             if(isset($_GET['message']) && !empty($_GET['message'])){
                 echo '<p>' . htmlspecialchars($_GET['message']) . '</p>';
             }
-   
         ?>
 <?php
+
 if(isset($_POST['submit'])){
    $email = $_POST['email'];
    $password = $_POST['password'];
    // Vérifiez les informations de connexion ici
 }
 ?>
-
 
  <div class="container justify-content-center rounded div_bordure">
   <div class="row div_connexion w-100   align-items-center justify-content-center bg-light " >
