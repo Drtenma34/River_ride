@@ -2,109 +2,62 @@
 session_start();
 /*var_dump($_SESSION);
 exit;*/
+
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+} else {
+    $userId = null;
+}
+include("includes/db.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ANISITE</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" type="text/css" href="css/NavbarDropdown.css">
-
-  <script src="js/alert_message.js"></script>
-
+    <title>RIVER RIDE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/NavbarDropdown.css">
+    <script src="js/alert_message.js"></script>
 </head>
-
 <body>
 
-
-<?php
-if (isset($_SESSION['id'])) {
-  $userId = $_SESSION['id'];
-} else {
-  $userId = null;
-}
-
-  include("includes/db.php");
-
-  try {
-    $likeQuery = $bdd->prepare(
-        "SELECT anime_id 
-            FROM user_likes_anime
-            WHERE user_id = :userId;"
-    );
-    $likeQuery->execute(['userId' => $userId]);
-    $likedAnimes = $likeQuery->fetchAll(PDO::FETCH_COLUMN);
-  } catch(PDOException $e) {
-    echo $e->getMessage();
-  }
-
-function isAnimeLiked($animeId, $likedAnimes) {
-    return in_array($animeId, $likedAnimes);
-  }
-
-?>
-
-<?php
-include('includes/header_complet_season_panel.php');
-?>
-
-<body>
-<div class="container mt-5">
-  <h1 class="text-center">Top 5 des animes les plus populaires</h1>
-
-  <?php
-  include ('includes/db.php');
-
-  // Récupérer les 5 animes avec le plus de likes
-  $stmt = $bdd->prepare("
-            SELECT a.*, COUNT(u.anime_id) AS likes
-            FROM animes AS a
-            JOIN user_likes_anime AS u ON a.id = u.anime_id
-            GROUP BY a.id
-            ORDER BY likes DESC
-            LIMIT 5
-        ");
-  $stmt->execute();
-
-  $animes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  foreach ($animes as $i => $anime) :
-    ?>
-
-    <div class="card mb-4">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img src="<?= $anime['poster']; ?>" class="card-img" alt="<?= $anime['name']; ?>">
+<?php include('includes/header_menu.php'); ?>
+<main class="mt-5">
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Portail pour composer son propre parcours -->
+            <div class="col-lg-6 col-md-12 mb-4 d-flex">
+                <div class="card flex-fill">
+                    <img src="images_fixes/composer.jpg" class="card-img-top" alt="Composer son propre parcours">
+                    <div class="card-body">
+                        <h3 class="card-title">Composer son propre parcours</h3>
+                        <p class="card-text">Choisissez vos étapes et hébergements pour une durée libre.</p>
+                        <a href="composer_parcours.php" class="btn btn-primary">Commencer</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Portail pour choisir un pack -->
+            <div class="col-lg-6 col-md-12 mb-4 d-flex">
+                <div class="card flex-fill">
+                    <img src="images_fixes/packs.jpg" class="card-img-top" alt="Choisir un pack">
+                    <div class="card-body">
+                        <h3 class="card-title">Choisir un pack</h3>
+                        <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
+                        <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
+                        <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
+                        <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
+                        <a href="choisir_pack.php" class="btn btn-primary">Découvrir</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><?= $anime['name']; ?></h5>
-            <?php if ($userId !== null) : ?>
-              <form method="post" action="likeIndex.php">
-                <input type="hidden" name="anime_id" value="<?= $anime['id'] ?>">
-                <input type="hidden" name="anime_name" value="<?= $anime['name'] ?>">
-                <input type="hidden" name="already_liked" value="<?= isAnimeLiked($anime['id'], $likedAnimes) ? '1' : '0' ?>">
-                <button type="submit" class="btn btn-info btn-sm"><?= isAnimeLiked($anime['id'], $likedAnimes) ? 'Unlike' : 'Like' ?></button>
-              </form>
-            <?php endif; ?>
-            <p class="card-text"><?= $anime['synopsis']; ?></p>
-            <p class="card-text"><small class="text-muted"><?= $anime['likes']; ?> likes</small></p>
-          </div>
-        </div>
-      </div>
     </div>
-
-  <?php endforeach; ?>
-
-</div>
+</main>
 
 <script src="js/navbar.js"></script>
-
 </body>
 </html>
+

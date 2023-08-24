@@ -1,0 +1,315 @@
+
+body{
+    background-color: black;
+}
+
+nav ul {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+}
+nav a:hover{
+    text-decoration: underline;
+    color: yellow;
+ }
+
+nav a{ 
+    text-decoration: none;
+    text-transform: uppercase; 
+    color: inherit;
+    display: block;
+    padding: 1em;
+}
+
+
+main{
+    padding: 30px;
+}
+  h3{
+    color: white;
+    text-align: center;
+  }
+
+  h1{
+color: black;
+    text-align: center;
+    margin-bottom: .5rem;
+font-weight: 500;
+line-height: 1.2;
+text-align: center;
+}
+
+
+
+nav{
+
+background-color: lightpink;
+}
+  header{
+  background-color: pink;
+  padding-inline: 30px;
+    }
+
+header a{
+flex-basis: 35%;
+    margin: 0;
+    text-align: center;
+}
+
+header nav{
+        display: none;
+}
+    
+
+    
+
+    p{
+
+      text-align: center;
+      color: white;
+      line-height: 1.5; 
+    }
+a{
+    text-align: center;
+     text-decoration: underline;
+}
+
+    li{
+        display: inline-block;
+    }
+
+    footer{
+text-decoration: underline;
+  padding: 30px;
+  margin: 40px;
+  margin-top: 20px;
+    }
+
+
+  main{
+    padding: 30px;
+}
+
+
+
+.container3 {
+
+justify-content: center;
+align-items: center;
+display: flex;
+width: 55%;
+
+}
+
+
+input {
+   margin: 10px;
+   padding: 10px;
+   border: none;
+   border-bottom: 2px solid #333;
+   outline: none;
+   font-size: 16px;
+}
+
+button {
+   margin: 20px;
+   padding: 10px 20px;
+   border: none;
+   background-color: #333;
+   color: #fff;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+
+
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+body.corp{
+  background-color: white;
+}
+
+.avatar {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.avatar img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+  
+  .message-container {
+    max-height: 400px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.message {
+    margin-bottom: 20px;
+}
+
+.user {
+    font-weight: bold;
+}
+
+.content {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.time {
+    color: #888;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.admin-message .user {
+    color: blue;
+}
+
+.admin-message .content {
+    background-color: lightblue;
+}
+
+.user-message .user {
+    color: green;
+}
+
+.user-message .content {
+    background-color: lightgreen;
+}
+
+.message-container .message:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.input-container {
+    margin-top: 10px;
+}
+.button-container {
+    margin-top: 10px;
+}
+
+.button-container button {
+    margin-right: 10px;
+}
+button {
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+
+
+/*mobile*/
+@media screen and (max-width: 380px) {
+    html {
+        font-size: 16px;
+    }
+
+    header{
+        display: none;
+        flex-basis: 35%;
+    margin: 0;
+    text-align: center;
+    }
+    
+  .container-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.message-container {
+  max-height: 400px;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.message {
+  margin-bottom: 20px;
+}
+
+.user {
+  font-weight: bold;
+}
+
+.content {
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.time {
+  color: #888;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.admin-message .user {
+  color: blue;
+}
+
+.admin-message .content {
+  background-color: lightblue;
+}
+
+.user-message .user {
+  color: green;
+}
+
+.user-message .content {
+  background-color: lightgreen;
+}
+
+.message-container .message:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.input-container {
+  margin-top: 10px;
+}
+.button-container {
+  margin-top: 10px;
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+button {
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+}
