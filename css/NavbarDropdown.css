@@ -1,0 +1,37 @@
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    background-color: #ddd;
+}
+
+.nav-item.dropdown .w-100.text-right span {
+    color: #007BFF; /* couleur initiale - bleu bootstrap */
+    transition: color 0.3s ease; /* transition de couleur lors du survol */
+}
+
+.nav-item.dropdown .w-100.text-right span:hover {
+    color: #DC3545; /* couleur de survol - rouge bootstrap */
+    cursor: pointer;
+}
+
+.nav-item.dropdown .w-100.text-right span:nth-child(2) {
+    /* Ajouter des styles spécifiques au pseudo ici si nécessaire */
+}
+
+.nav-item.dropdown .w-100.text-right span:nth-child(3) {
+    /* Ajouter des styles spécifiques à l'email ici si nécessaire */
+}

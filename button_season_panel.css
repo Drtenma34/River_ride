@@ -1,0 +1,9 @@
+.btn-liked {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btn-not-liked {
+    background-color: #808080; /* Gray */
+    color: black;
+}
