@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Page d'accueil</title>
+  <title>Inscription</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,7 +13,6 @@
 <style>
     <?php include("css/inscription_et_connexion.css"); ?>
 </style>
-
 
 <body>
 <?php
@@ -39,7 +38,7 @@ if(isset($_POST['submit'])){
  <div class="container justify-content-center rounded div_bordure">
   <div class="row div_connexion w-100   align-items-center justify-content-center bg-light " >
       <div class="col-sm-4">
-    <img src="image anime/inscription.png" alt="Image de connexion" class="img_connexion" width="360px" height="600px">
+    <img src="../images/inscription.png" alt="Image d'inscription" class="img_inscription" width="360px" height="600px">
     </div>
     <div class="col-sm-4 div_connexion flex-column">
       <h1 class = "text-black">Bonjour !</h1>

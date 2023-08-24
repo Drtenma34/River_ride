@@ -1,8 +1,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
         <a class="navbar-brand" href="index.php">
-            <img src="images/logo Anisite.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <span class="ml-2 text-uppercase">SITE ANISITE</span>
+            <img src="images/image_identification.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+            <span class="ml-2 text-uppercase">RIVER RIDE</span>
         </a>
         <button class="navbar-toggler" type="button" id="navbarToggler" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

@@ -31,7 +31,7 @@ include("includes/db.php");
             <!-- Portail pour composer son propre parcours -->
             <div class="col-lg-6 col-md-12 mb-4 d-flex">
                 <div class="card flex-fill">
-                    <img src="images_fixes/composer.jpg" class="card-img-top" alt="Composer son propre parcours">
+                    <img src="images/composer.jpg" class="card-img-top" alt="Composer son propre parcours">
                     <div class="card-body">
                         <h3 class="card-title">Composer son propre parcours</h3>
                         <p class="card-text">Choisissez vos étapes et hébergements pour une durée libre.</p>
@@ -42,7 +42,7 @@ include("includes/db.php");
             <!-- Portail pour choisir un pack -->
             <div class="col-lg-6 col-md-12 mb-4 d-flex">
                 <div class="card flex-fill">
-                    <img src="images_fixes/packs.jpg" class="card-img-top" alt="Choisir un pack">
+                    <img src="images/packs.jpg" class="card-img-top" alt="Choisir un pack">
                     <div class="card-body">
                         <h3 class="card-title">Choisir un pack</h3>
                         <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
