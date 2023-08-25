@@ -72,6 +72,12 @@ $_SESSION['email'] = $_POST['email'];
 $_SESSION['nom'] = $users[0]['nom'];
 $_SESSION['id'] = $users[0]['id'];
 
+if ($users[0]['is_admin'] == 1) {
+    $_SESSION['is_admin'] = true;
+} else {
+    $_SESSION['is_admin'] = false;
+}
+
 header('location: ../index.php?message=Bonjour' . '  ' . $users[0]['nom'] . ' '. 'd\' id =  ' . $users[0]['id']);
 
 ?>

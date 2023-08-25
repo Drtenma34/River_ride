@@ -21,7 +21,14 @@ include("includes/db.php");
 </head>
 <body>
 
-<?php include('includes/header_menu.php'); ?>
+<?php include('includes/header_menu.php');
+
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+header('Location: back_office.php'); // Redirige l'administrateur vers la page de back office
+exit;
+}
+?>
+
 <main class="center-content mt-5">
     <div class="container mt-5">
         <h2 class="big-title">Préparez des vacances en kayak sur la Loire inoubliables</h2>
