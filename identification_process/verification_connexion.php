@@ -78,6 +78,11 @@ if ($users[0]['is_admin'] == 1) {
     $_SESSION['is_admin'] = false;
 }
 
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
+    header('Location: ../manage_stages.php'); // Redirige l'administrateur vers la page de back office
+    exit;
+}
+
 header('location: ../index.php?message=Bonjour' . '  ' . $users[0]['nom'] . ' '. 'd\' id =  ' . $users[0]['id']);
 
 ?>

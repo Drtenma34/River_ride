@@ -22,11 +22,6 @@ include("includes/db.php");
 <body>
 
 <?php include('includes/header_menu.php');
-
-if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']) {
-header('Location: back_office.php'); // Redirige l'administrateur vers la page de back office
-exit;
-}
 ?>
 
 <main class="center-content mt-5">

@@ -22,6 +22,13 @@ session_start();
                             <a class="nav-link" href="identification_process/inscription.php">Inscription</a>
                         </li>
                     <?php endif; ?>
+
+                    <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == 1): ?>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="manage_stages.php">Back Office</a>
+                        </li>
+                    <?php endif; ?>
+
                     <?php if (isset($userId) && $userId !== null) : ?>
                         <!-- ne s'affiche pas si aucun user connecté -->
                         <!--<li class="nav-item active">
@@ -65,4 +72,5 @@ session_start();
         </div>
     </nav>
 </header>
+
 
