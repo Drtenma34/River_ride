@@ -22,7 +22,7 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
 $email = $_POST['email'];
 $password = $_POST['password'];
 
-include("includes/db.php");
+include("../includes/db.php");
 
 $query = 'SELECT * FROM users WHERE email = :email';
 $req = $bdd -> prepare($query);
@@ -34,7 +34,7 @@ if (count($users) == 0) {
     exit;
 }
 
-if (!(hash("sha256", $password) === $users[0]['password'])){
+if (!password_verify($password, $users[0]['password'])) {
     header('location: connexion.php?message=Mot de passe incorrect');
     exit;
 }
@@ -68,10 +68,10 @@ if ($users[0]['is_valid']!= 1){
 writeLogLine(true, $email);
 
 $_SESSION['email'] = $_POST['email'];
-$_SESSION['pseudo'] = $users[0]['pseudo'];
+$_SESSION['nom'] = $users[0]['nom'];
 $_SESSION['id'] = $users[0]['id'];
 
-header('location: index.php?message=Bonjour' . '  ' . $users[0]['pseudo'] . ' '. 'd\' id =  ' . $users[0]['id']);
+header('location: ../index.php?message=Bonjour' . '  ' . $users[0]['nom'] . ' '. 'd\' id =  ' . $users[0]['id']);
 
 ?>
 

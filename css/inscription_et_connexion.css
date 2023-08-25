@@ -44,12 +44,13 @@ text-align: center;
 
 nav{
 
-background-color: lightpink;
+background-color: black;
 }
-  header{
-  background-color: pink;
-  padding-inline: 30px;
-    }
+
+header {
+    background-color: black;
+    padding-inline: 30px;
+}
 
 header a{
 flex-basis: 35%;

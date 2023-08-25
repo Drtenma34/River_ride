@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Si un message d'erreur est défini, rediriger vers la page d'inscription avec le message d'erreur
     if ($message) {
-        header("Location: inscription2.php?message=" . urlencode($message));
+        header("Location: inscription3.php?message=" . urlencode($message));
         exit;
     }
 
