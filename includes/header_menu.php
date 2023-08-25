@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3 fixed-top">
         <div class="container-fluid">
@@ -10,17 +14,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto" id="navbarList">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="identification_process/connexion.php">Connexion</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="identification_process/inscription.php">Inscription</a>
-                    </li>
-                    <?php if ($userId !== null) : ?>
+                    <?php if (!isset($_SESSION['id'])) : ?>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="identification_process/connexion.php">Connexion</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="identification_process/inscription.php">Inscription</a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if (isset($userId) && $userId !== null) : ?>
                         <!-- ne s'affiche pas si aucun user connecté -->
-                    <!--<li class="nav-item active">
-                        <a class="nav-link" href="print_pdf.php">Fiche pdf</a>
-                    </li>-->
+                        <!--<li class="nav-item active">
+                            <a class="nav-link" href="print_pdf.php">Fiche pdf</a>
+                        </li>-->
                     <?php endif; ?>
                 </ul>
 
@@ -31,7 +37,6 @@
                             <li class='nav-item dropdown' id='navbarDropdown'>
                                 <div class='w-100 text-right'>
                                     <span style='color:green'>Connecté</span>
-                                   
                                     <span class='ml-2'>".$_SESSION['email']."</span>
                                 </div>
                                 <div class='dropdown-menu' id='dropdownMenu'>

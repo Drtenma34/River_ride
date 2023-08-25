@@ -4,7 +4,7 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
 }
 
 $title = "Mdp oublié";
-include("../includes/head.php");
+include("../../includes/head.php");
 ?>
 
 <body>

@@ -10,7 +10,7 @@ if (isset($_GET['key'])) {
 
     $key = $_GET['key'];
 
-    include("../includes/db.php");
+    include("../../includes/db.php");
 
     $requser = $bdd->prepare("SELECT * FROM users WHERE confirmed_key = ?");
 
@@ -28,7 +28,7 @@ if (isset($_GET['key'])) {
         exit;
 
 } else {
-    include("../includes/head.php");
+    include("../../includes/head.php");
     // header("location: ../index.php");
 }
 ?>

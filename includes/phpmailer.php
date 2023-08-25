@@ -20,13 +20,13 @@ function sendmail($message, $objet, $destinataire)
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host = 'smtp.office365.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth = true;                                   //Enable SMTP authentication
-        $mail->Username = 'mangas94@outlook.fr';                     //SMTP username
-        $mail->Password = 'Azerty1@';                               //SMTP password
+        $mail->Username = 'river_ride_pa_dvc@outlook.com';                     //SMTP username
+        $mail->Password = 'jepasselepa23*';                               //SMTP password
         $mail->SMTPSecure = 'tls';            //Enable implicit TLS encryption
         $mail->Port = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
         //Recipients
-        $mail->setFrom('mangas94@outlook.fr', 'Admin_Anisite');
+        $mail->setFrom('river_ride_pa_dvc@outlook.com', 'Admin_RiverRide');
         $mail->addAddress($destinataire);     //Add a recipient
         // $mail->addAddress('ellen@example.com');               //Name is optional
         // $mail->addReplyTo('info@example.com', 'Information');

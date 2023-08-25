@@ -6,17 +6,17 @@ error_reporting(E_ALL);
 //Penser à rajouter les vérifications des champs
 
 try {
-    include("../includes/db.php");
+    include("../../includes/db.php");
 
 } catch (Exception $e) {
 
-    header("location: ../index.php");
+    header("location: ../../index.php");
     exit;
 }
 
 $q = $bdd->prepare("UPDATE users SET password = ? WHERE confirmed_key = ?");
 
-$q->execute([hash("sha256", $_POST["pwd"]), $_POST['key']]);
+$q->execute([password_hash($_POST["pwd"], PASSWORD_DEFAULT), $_POST['key']]);
 
 
 $q_id = $bdd->prepare("SELECT id FROM users WHERE confirmed_key=?");

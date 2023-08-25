@@ -1,7 +1,4 @@
 <?php
-session_start();
-/*var_dump($_SESSION);
-exit;*/
 
 if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
@@ -27,6 +24,7 @@ include("includes/db.php");
 <?php include('includes/header_menu.php'); ?>
 <main class="center-content mt-5">
     <div class="container mt-5">
+        <h2 class="big-title">Préparez des vacances en kayak sur la Loire inoubliables</h2>
         <div class="row">
             <!-- Portail pour composer son propre parcours -->
             <div class="col-lg-6 col-md-12 mb-4 d-flex">

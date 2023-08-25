@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Inscription</title>
+    <title>Connexion</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
 
     </form>
 
-      <p style="color: black;">Vous n'avez pas de compte? <strong><a href="captcha/index.php">Inscrivez-vous!</a></strong></p>
+      <p style="color: black;">Vous n'avez pas de compte? <strong><a href="inscription.php">Inscrivez-vous!</a></strong></p>
       <p>  <strong><a href="mdp_oublie/formulaire_mdp.php"> Mot de passe oublié ?</a></strong></p>
 
     </main>

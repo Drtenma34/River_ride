@@ -12,9 +12,9 @@ if (empty($_POST['email'])) {
 }
 
 //include("../includes/db.php");
-include("../includes/phpmailer.php");
+include("../../includes/phpmailer.php");
 
-include("../includes/db.php");
+include("../../includes/db.php");
 
 $q = $bdd->prepare("SELECT confirmed_key FROM users WHERE email=?");
 $q->execute([$_POST['email']]);
@@ -24,16 +24,19 @@ if (count($q) > 0) {
     $confirmed_key = $q[0]['confirmed_key'];
     //var_dump($confirmed_key);
 
-    $message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : http://localhost:8888/Projet_Annuel_GIT/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
-    $objet = "Changement de mot de passe Anisite";
+    $message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : http://localhost:80/River_ride_GIT/identification_process/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
+
+    $objet = "Changement de mot de passe River Ride";
     $destinataire = $_POST['email'];
 
     sendmail($message, $objet, $destinataire);
 
     // Serveur Apache (envoie 2 mails un pour local host et un pour le serveur Apache )
 
-    $message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : http://anisite.fr/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
-    $objet = "Changement de mot de passe Anisite";
+    $message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : https://riverride-david.fr/identification_process/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
+    /*http://anisite.fr/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;*/
+
+    $objet = "Changement de mot de passe River Ride";
     $destinataire = $_POST['email'];
 
     sendmail($message, $objet, $destinataire);

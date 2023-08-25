@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
-        <a class="navbar-brand" href="index.php">
+        <a class="navbar-brand" href="../index.php">
             <img src="../images/chateau.png" width="30" height="30" class="d-inline-block align-top" alt="">
             <span class="ml-2 text-uppercase">RIVER RIDE</span>
         </a>
