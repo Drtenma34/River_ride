@@ -17,8 +17,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php include("includes/head.php");
+?>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -47,6 +47,8 @@
 </style>
 <title>Page avec Rubriques</title>
 </head>
+
+<?php include("includes/header_menu.php"); ?>
 <body>
 
 
@@ -57,7 +59,7 @@
     <div class="section">
       <h2> '. $value['nom'] .'</h2>
       <p>Contenu de la rubrique...</p>
-      <button class="read-more-btn"><a href = "stage_info.php?inf= '. $value['nom'] . '">En savoir plus </a></button>
+      <button class="read-more-btn"><a href = "stage_info.php?inf='. $value['nom'] . '">En savoir plus </a></button>
     </div>
     
     
