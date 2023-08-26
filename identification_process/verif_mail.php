@@ -2,7 +2,7 @@
 if (isset($_GET["key"])){
     $key = intval($_GET["key"]);
 
-    include("includes/db.php");
+    include("../includes/db.php");
 
     $q = 'SELECT * FROM users WHERE confirmed_key = ?'; //  ?  sera remplacé $email
     $req = $bdd->prepare($q);

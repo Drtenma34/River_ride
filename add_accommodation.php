@@ -1,5 +1,10 @@
 <?php
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+include("includes/db.php");
 
 // Vérifie si l'utilisateur est connecté en tant qu'admin
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
@@ -8,35 +13,59 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     exit;
 }
 
-include("includes/db.php");
+function validateFormData($data)
+{
+    $errors = [];
 
-// Vérifier si le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupération des données du formulaire
-    $nom = $_POST['nom'];
-    $photo = $_FILES['photo'];
-    $adresse = $_POST['adresse'];
-    $price_per_night = $_POST['price_per_night'];
-    $max_pers = $_POST['max_pers'];
-    $travel_stage_id = $_POST['travel_stage_id'];  // Vous devez avoir un champ pour sélectionner l'étape de voyage associée
-
-    // Traiter l'image (si vous en avez une)
-    $photoName = '';
-    if ($photo['error'] == 0) {
-        $originalName = pathinfo($photo['name'], PATHINFO_FILENAME);
-        $extension = pathinfo($photo['name'], PATHINFO_EXTENSION);
-        // Créer un nom unique pour le fichier
-        $photoName = 'images_accommodations/' . uniqid($originalName . '_') . '.' . $extension;  // Assurez-vous que le dossier 'images_accommodations' existe
-        move_uploaded_file($photo['tmp_name'], $photoName);
+    if (empty($data['nom'])) {
+        $errors[] = "Le nom du logement est requis.";
     }
 
-    // Insertion dans la base de données
-    $q = 'INSERT INTO accommodations (nom, adress, photo, price_per_night, max_pers, travel_stage_id) VALUES (?, ?, ?, ?, ?, ?)';
-    $req = $bdd->prepare($q);
-    $req->execute([$nom, $adresse, $photoName, $price_per_night, $max_pers, $travel_stage_id]);
+    if (empty($data['adresse'])) {
+        $errors[] = "L'adresse est requise.";
+    }
 
-    // Redirection vers la page de gestion des logements après l'ajout
+    if (empty($data['max_pers']) || $data['max_pers'] <= 0) {
+        $errors[] = "Le nombre maximum de personnes doit être un nombre positif.";
+    }
+
+    if (empty($data['price_per_night']) || $data['price_per_night'] <= 0) {
+        $errors[] = "Le prix par nuit doit être un nombre positif.";
+    }
+
+    return $errors;
+}
+
+$errors = validateFormData($_POST);
+
+if (empty($errors)) {
+    // Upload de l'image (si elle est fournie)
+    $photo_path = null;
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/';
+        $photo_path = $upload_dir . basename($_FILES['photo']['name']);
+        move_uploaded_file($_FILES['photo']['tmp_name'], $photo_path);
+    }
+
+    // Insertion dans la BDD
+    $q_insert = 'INSERT INTO accommodations (nom, adresse, max_pers, price_per_night, photo, travel_stage_id) VALUES (?, ?, ?, ?, ?, ?)';
+    $req_insert = $bdd->prepare($q_insert);
+    $req_insert->execute([
+        $_POST['nom'],
+        $_POST['adresse'],
+        $_POST['max_pers'],
+        $_POST['price_per_night'],
+        $photo_path,
+        $_POST['travel_stage_id']
+    ]);
+
+    // Redirection vers la page de gestion des logements avec un message de succès
+    $_SESSION['success'] = "Logement ajouté avec succès !";
+    header('Location: manage_accommodations.php');
+    exit;
+} else {
+    // Si des erreurs sont trouvées, stockez-les dans la session et redirigez vers manage_accommodations.php pour les afficher
+    $_SESSION['errors'] = $errors;
     header('Location: manage_accommodations.php');
     exit;
 }
-?>
