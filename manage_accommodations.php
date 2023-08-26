@@ -23,6 +23,7 @@ $req_accommodations = $bdd->prepare($q_accommodations);
 $req_accommodations->execute([$selected_stage]);
 $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
 
+
 // Pour chaque logement, calculez le nombre de places disponibles
 foreach ($accommodations as $key => $accommodation) {
     $q_reservations = 'SELECT COUNT(*) as total_reservations FROM accommodation_reservations WHERE accommodation_id = ?';
@@ -75,7 +76,7 @@ foreach ($accommodations as $key => $accommodation) {
             <tr>
                 <td><?= $accommodation['id'] ?></td>
                 <td><?= $accommodation['nom'] ?></td>
-                <td><?= $accommodation['adress'] ?></td>
+                <td><?= $accommodation['adresse'] ?></td> <!-- Ligne corrigée -->
                 <td><?= $accommodation['price_per_night'] ?>€</td>
                 <td><?= $accommodation['available_places'] ?>/<?= $accommodation['max_pers'] ?></td>
                 <td>
@@ -88,67 +89,45 @@ foreach ($accommodations as $key => $accommodation) {
     </table>
 
 
-<?php
-//fonction pour valider les données du formulaire
-function validateFormData($data) {
-    global $stages; // Utilisation de la variable globale pour accéder aux étapes
+    <?php
+    //fonction pour valider les données du formulaire
+    function validateFormData($data) {
+        $errors = [];
+
+        // Vérifiez le nom du logement
+        if (empty($data['nom'])) {
+            $errors[] = "Le nom du logement est requis.";
+        }
+
+        // Vérifiez l'adresse
+        if (empty($data['adresse'])) {
+            $errors[] = "L'adresse est requise.";
+        }
+
+        // ... Ajoutez d'autres vérifications ici ...
+
+        return $errors;
+    }
 
     $errors = [];
-
-    // Vérifiez le nom du logement
-    if (empty($data['nom'])) {
-        $errors[] = "Le nom du logement est requis.";
-    }
-
-    // Vérifiez l'adresse
-    if (empty($data['adresse'])) {
-        $errors[] = "L'adresse est requise.";
-    }
-
-    // Vérifiez le nombre maximum de personnes
-    if (empty($data['max_pers']) || $data['max_pers'] <= 0) {
-        $errors[] = "Le nombre maximum de personnes doit être un nombre positif.";
-    }
-
-    // Vérifiez le prix par nuit
-    if (empty($data['price_per_night']) || $data['price_per_night'] <= 0) {
-        $errors[] = "Le prix par nuit doit être un nombre positif.";
-    }
-
-    // Vérifiez l'étape associée
-    $validStageId = false;
-    foreach ($stages as $stage) {
-        if ($stage['id'] == $data['travel_stage_id']) {
-            $validStageId = true;
-            break;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $errors = validateFormData($_POST);
+        if (empty($errors)) {
+            // Si tout est valide, redirigez vers add_accommodation.php pour l'insertion dans la base de données
+            header('Location: add_accommodation.php');
+            exit;
         }
     }
-    if (!$validStageId) {
-        $errors[] = "L'étape sélectionnée n'est pas valide.";
-    }
 
-    return $errors;
-}
-
-$errors = [];
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $errors = validateFormData($_POST);
-    if (empty($errors)) {
-        // Si tout est valide, redirigez vers add_accommodation.php pour l'insertion dans la base de données
-        header('Location: add_accommodation.php');
-        exit;
+    // Dans votre code HTML :
+    if (!empty($errors)) {
+        echo "<div class='alert alert-danger'>";
+        foreach ($errors as $error) {
+            echo "<p>$error</p>";
+        }
+        echo "</div>";
     }
-}
-
-// Dans votre code HTML :
-if (!empty($errors)) {
-    echo "<div class='alert alert-danger'>";
-    foreach ($errors as $error) {
-        echo "<p>$error</p>";
-    }
-    echo "</div>";
-}
-?>
+    ?>
 
     <!-- Début de la partie "Ajouter un logement" -->
     <div class="card mt-5">
@@ -206,18 +185,18 @@ if (!empty($errors)) {
 
                     data.forEach(accommodation => {
                         let row = `
-                <tr>
-                    <td>${accommodation.id}</td>
-                    <td>${accommodation.nom}</td>
-                    <td>${accommodation.adress}</td>
-                    <td>${accommodation.price_per_night}€</td>
-                    <td>${accommodation.available_places}/${accommodation.max_pers}</td>
-                    <td>
-                        <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
-                        <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
-                    </td>
-                </tr>
-            `;
+            <tr>
+                <td>${accommodation.id}</td>
+                <td>${accommodation.nom}</td>
+                <td>${accommodation.adresse}</td> <!-- Ligne corrigée -->
+                <td>${accommodation.price_per_night}€</td>
+                <td>${accommodation.available_places}/${accommodation.max_pers}</td>
+                <td>
+                    <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
+                    <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        `;
 
                         tableBody.innerHTML += row;
                     });

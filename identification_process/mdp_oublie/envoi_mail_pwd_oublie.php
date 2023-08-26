@@ -33,13 +33,12 @@ if (count($q) > 0) {
 
     // Serveur Apache (envoie 2 mails un pour local host et un pour le serveur Apache )
 
-    $message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : https://riverride-david.fr/identification_process/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
-    /*http://anisite.fr/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;*/
+    /*$message = "Bonjour, veuillez changer votre mot de passe en utilisant ce lien : https://riverride-david.fr/identification_process/mdp_oublie/verif_pwd.php?key=" . $confirmed_key;
 
     $objet = "Changement de mot de passe River Ride";
     $destinataire = $_POST['email'];
 
-    sendmail($message, $objet, $destinataire);
+    sendmail($message, $objet, $destinataire);*/
 
 
     header("location: ../connexion.php?message=Un email a été envoyé pour réinitialiser votre mot de passe");

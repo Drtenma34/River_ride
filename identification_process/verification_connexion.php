@@ -48,7 +48,7 @@ if ($users[0]['is_valid']!= 1){
     //ENVOI DES MAILS
 
     $objet = "confirmation de compte" ;
-    $message = "Bonjour veuillez vérifier votre compte avec ce lien : http:localhost:80/River_ride_GIT/identification_process/verif_mail.php?key=" . $confirmed_key;
+    $message = "Bonjour veuillez vérifier votre compte avec ce lien : http://localhost:80/River_ride_GIT/identification_process/verif_mail.php?key=" . $confirmed_key;
 
     $destinataire = $_POST["email"];
 
@@ -56,12 +56,12 @@ if ($users[0]['is_valid']!= 1){
 
 //VERSION APACHE
 
-    $objet = "confirmation de compte" ;
+    /*$objet = "confirmation de compte" ;
     $message = "Bonjour veuillez vérifier votre compte avec ce lien : https://riverride-david.fr/identification_process/verif_mail.php?key=" . $confirmed_key;
 
     $destinataire = $_POST["email"];
 
-    sendmail($message, $objet, $destinataire);
+    sendmail($message, $objet, $destinataire);*/
 
     exit;
 }
