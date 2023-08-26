@@ -36,7 +36,7 @@ if (!empty($selected_hotels)) {
         <h2>Services supplémentaires</h2>
         <p>Choisissez des suppléments de bagage pour vos réservations d'hôtel.</p>
         
-        <form action="finalize_booking.php" method="post"> <!-- Assuming there's a page named finalize_booking.php where the booking will be finalized -->
+        <form action="checkout.php" method="post"> <!-- Assuming there's a page named finalize_booking.php where the booking will be finalized -->
             <?php
             foreach ($hotel_details as $hotel) {
                 echo '<div class="hotel-section">';
