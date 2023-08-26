@@ -46,7 +46,7 @@ include("includes/db.php");
                     <div class="card-body">
                         <h3 class="card-title">Choisir un pack</h3>
                         <p class="card-text">Explorez nos packs préétablis d'étapes et hébergements.</p>
-                        <a href="choisir_pack.php" class="btn btn-primary">Découvrir</a>
+                        <a href="packs.php" class="btn btn-primary">Découvrir</a>
                     </div>
                 </div>
             </div>

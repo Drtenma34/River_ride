@@ -72,9 +72,12 @@ foreach ($accommodations as $key => $accommodation) {
         </tr>
         </thead>
         <tbody>
-        <?php foreach($accommodations as $accommodation): ?>
+        <?php
+        $accommodationNumber = 1;
+
+        foreach($accommodations as $accommodation): ?>
             <tr>
-                <td><?= $accommodation['id'] ?></td>
+                <td><?= $accommodationNumber ?></td>
                 <td><?= $accommodation['nom'] ?></td>
                 <td><?= $accommodation['adresse'] ?></td> <!-- Ligne corrigée -->
                 <td><?= $accommodation['price_per_night'] ?>€</td>
@@ -84,6 +87,7 @@ foreach ($accommodations as $key => $accommodation) {
                     <a href="delete_accommodation.php?id=<?= $accommodation['id'] ?>" class="btn btn-danger">Supprimer</a>
                 </td>
             </tr>
+            <?php $accommodationNumber++;?>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -183,23 +187,31 @@ foreach ($accommodations as $key => $accommodation) {
                     let tableBody = document.querySelector('table tbody');
                     tableBody.innerHTML = ''; // vider le tableau actuel
 
+                    // Initialisation de la variable pour compter les hébergements
+                    let accommodationNumber = 1;
+
                     data.forEach(accommodation => {
                         let row = `
-            <tr>
-                <td>${accommodation.id}</td>
-                <td>${accommodation.nom}</td>
-                <td>${accommodation.adresse}</td> <!-- Ligne corrigée -->
-                <td>${accommodation.price_per_night}€</td>
-                <td>${accommodation.available_places}/${accommodation.max_pers}</td>
-                <td>
-                    <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
-                    <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
-                </td>
-            </tr>
-        `;
+                    <tr>
+                        <!-- Affichage du numéro d'ordre du hébergement -->
+                        <td>${accommodationNumber}</td>
+                        <td>${accommodation.nom}</td>
+                        <td>${accommodation.adresse}</td>
+                        <td>${accommodation.price_per_night}€</td>
+                        <td>${accommodation.available_places}/${accommodation.max_pers}</td>
+                        <td>
+                            <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
+                            <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                `;
 
                         tableBody.innerHTML += row;
+
+                        // Augmentation de la variable pour le prochain hébergement
+                        accommodationNumber++;
                     });
                 });
         });
+
     </script>

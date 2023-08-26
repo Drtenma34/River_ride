@@ -35,7 +35,6 @@ $stages = $req->fetchAll();
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Nom</th>
             <th>Photo</th>
             <th>Actions</th>
@@ -43,9 +42,13 @@ $stages = $req->fetchAll();
         </thead>
         <tbody>
         <!-- Parcourir les résultats et les afficher dans le tableau -->
-        <?php foreach ($stages as $stage): ?>
+        <?php
+        /*Initialisation de la variable pour compter les étapes*/
+        $stageNumber = 1;
+        foreach ($stages as $stage): ?>
             <tr>
-                <td><?= $stage['id'] ?></td>
+                <!-- Affichage du numéro d'ordre de l'étape -->
+                <td><?= $stageNumber ?></td>
                 <td><?= $stage['nom'] ?></td>
                 <td><img src="<?= $stage['photo'] ?>" alt="<?= $stage['nom'] ?>" width="100"></td>
                 <td>
@@ -55,6 +58,8 @@ $stages = $req->fetchAll();
                     <a href="delete_stage.php?id=<?= $stage['id'] ?>" class="btn btn-danger">Supprimer</a>
                 </td>
             </tr>
+            <!-- Augmentation de la variable pour la prochaine étape -->
+            <?php $stageNumber++; ?>
         <?php endforeach; ?>
         </tbody>
     </table>

@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nom = $_POST['nom'];
     $photo = $_FILES['photo'];
     $description = $_POST['description'];
+    $description_activite = $_POST['description_activite'];
 
     $photoName = $stage['photo']; // Par défaut, conservez l'ancienne photo
 
@@ -60,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Mettre à jour la base de données
-    $q = 'UPDATE travel_stages SET nom = ?, description = ?, photo = ? WHERE id = ?';
+    $q = 'UPDATE travel_stages SET nom = ?, description = ?, photo = ?, description_activite = ? WHERE id = ?';
     $req = $bdd->prepare($q);
-    $req->execute([$nom, $description, $photoName, $stageId]);
+    $req->execute([$nom, $description, $photoName, $description_activite, $stageId]);
 
     // Redirection vers le back office après la mise à jour
     header('Location: manage_stages.php');
@@ -81,6 +82,10 @@ include 'header_back_office.php';
     <div class="mb-3">
         <label for="description" class="form-label">Description de l'étape</label>
         <textarea class="form-control" id="description" name="description" rows="5"><?= $stage['description'] ?></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="description_activite" class="form-label">Description des activités</label>
+        <textarea class="form-control" id="description_activite" name="description_activite" rows="5"><?= $stage['description_activite'] ?></textarea>
     </div>
     <div class="mb-3">
         <label for="photo" class="form-label">Photo actuelle</label><br>
