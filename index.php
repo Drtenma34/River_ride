@@ -35,7 +35,7 @@ include("includes/db.php");
                     <div class="card-body">
                         <h3 class="card-title">Composer son propre parcours</h3>
                         <p class="card-text">Choisissez vos étapes et hébergements pour une durée libre.</p>
-                        <a href="composer_parcours.php" class="btn btn-primary">Commencer</a>
+                        <a href="stages.php" class="btn btn-primary">Commencer</a>
                     </div>
                 </div>
             </div>
