@@ -93,5 +93,7 @@ try {
     <footer>
         <p>&copy; 2023 Tous droits réservés.</p>
     </footer>
+
+    <script src="js/navbar.js"></script>
 </body>
 </html>
