@@ -5,6 +5,7 @@
     <title>RIVER RIDE - Packs</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <link rel="stylesheet" type="text/css" href="css/NavbarDropdown.css">
@@ -12,10 +13,16 @@
 
 <body>
 
-<?php include('includes/header_menu.php'); ?>
-
 <?php
+include('includes/header_menu.php');
 include("includes/db.php");
+
+// Assurer que l'utilisateur est connecté
+
+if (!isset($_SESSION['id'])) {
+    echo "Vous devez être connecté pour effectuer une réservation.";
+    exit();
+}
 
 try {
     $accommodationsQuery = $bdd->prepare(
@@ -71,7 +78,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[0]; ?>" alt="Photo de l'hôtel proche de Chambord" width="300">
+                <img src="images_accommodations/Hotel-Chambord-Brussels-Exterior_64eab6bf7d9f3.jpeg?>" alt="Photo de l'hôtel proche de Chambord" width="300">
                 <h6>Hôtel proche de Chambord</h6>
                 <p>Un hôtel de luxe situé à proximité du château, offrant des chambres spacieuses, un spa et une cuisine
                     gastronomique.</p>
@@ -112,24 +119,33 @@ try {
                     confort haut de gamme.</p>
             </div>
 
-
             <section class="mb-5 p-3 border rounded text-bg-light">
                 <div class="d-flex justify-content-between">
+
                     <!-- Form pour le Pack Royal -->
-                    <form action="check_availability.php" method="post" class="mt-3">
+                    <form action="register_acco_reservations.php" method="post" class="mt-3">
                         <h4>Réserver le Pack "Royal"</h4>
                         <div class="mb-3">
-                            <label for="dateRoyal" class="form-label">Choisissez une date :</label>
-                            <input type="date" class="form-control" id="dateRoyal" name="dateRoyal" min="2023-09-01"
-                                   max="2023-10-31" required>
+                            <label for="startDateRoyal" class="form-label">Date de début :</label>
+                            <input type="date" class="form-control" id="startDateRoyal" name="start_date"
+                                   min="2023-09-01" max="2023-10-31" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDateRoyal" class="form-label">Date de fin :</label>
+                            <input type="date" class="form-control" id="endDateRoyal" name="end_date" min="2023-09-02"
+                                   max="2023-11-01" required>
                         </div>
                         <div class="mb-3">
                             <label for="numberRoyal" class="form-label">Nombre de personnes :</label>
-                            <input type="number" class="form-control" id="numberRoyal" name="numberRoyal" min="1"
+                            <input type="number" class="form-control" id="numberRoyal" name="number_of_people" min="1"
                                    max="8" required>
                         </div>
+                        <input type="hidden" name="accommodation_id_chambord" value="17">
+                        <input type="hidden" name="accommodation_id_chenonceau" value="18">
+                        <input type="hidden" name="accommodation_id_amboise" value="19">
                         <input type="hidden" name="packType" value="Royal">
-                        <button type="submit" class="btn btn-primary">Vérifier la disponibilité</button>
+
+                        <div id="availabilityMessage"></div>
                     </form>
 
                 </div>
@@ -209,22 +225,36 @@ try {
 
             <section class="mb-5 p-3 border rounded text-bg-light">
                 <div class="d-flex justify-content-between">
+
+
                     <!-- Form pour le Pack Seigneur -->
-                    <form action="check_availability.php" method="post" class="mt-3">
+                    <form action="register_acco_reservations.php" method="post" class="mt-3">
                         <h4>Réserver le Pack "Seigneur"</h4>
                         <div class="mb-3">
-                            <label for="dateSeigneur" class="form-label">Choisissez une date :</label>
-                            <input type="date" class="form-control" id="dateSeigneur" name="dateSeigneur"
+                            <label for="dateSeigneurStart" class="form-label">Date de début :</label>
+                            <input type="date" class="form-control" id="dateSeigneurStart" name="start_date"
+                                   min="2023-09-01"
+                                   max="2023-10-31" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateSeigneurEnd" class="form-label">Date de fin :</label>
+                            <input type="date" class="form-control" id="dateSeigneurEnd" name="end_date"
                                    min="2023-09-01"
                                    max="2023-10-31" required>
                         </div>
                         <div class="mb-3">
                             <label for="numberSeigneur" class="form-label">Nombre de personnes :</label>
-                            <input type="number" class="form-control" id="numberSeigneur" name="numberSeigneur" min="1"
+                            <input type="number" class="form-control" id="numberSeigneur" name="number_of_people"
+                                   min="1"
                                    max="8" required>
                         </div>
+                        <input type="hidden" name="accommodation_id_chambord" value="20">
+                        <input type="hidden" name="accommodation_id_chenonceau" value="21">
+                        <input type="hidden" name="accommodation_id_amboise" value="22">
                         <input type="hidden" name="packType" value="Seigneur">
-                        <button type="submit" class="btn btn-primary">Vérifier la disponibilité</button>
+
+
+                        <div id="availabilityMessage"></div>
                     </form>
                 </div>
             </section>
@@ -244,8 +274,42 @@ try {
     }
 </script>
 
+<script>
+    function checkAvailability(formElement) {
+        // Récupération des données du formulaire
+        let formData = new FormData(formElement);
+
+        // Envoi de la requête AJAX
+        fetch('check_availability.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Affichage du message de disponibilité
+                let messageElement = formElement.querySelector('#availabilityMessage');
+                if (data.status === "success") {
+                    messageElement.textContent = data.message;
+                    messageElement.style.color = "green";
+                } else {
+                    messageElement.textContent = data.message;
+                    messageElement.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error("Une erreur s'est produite:", error);
+            });
+    }
+
+    // Attacher l'événement `onchange` à chaque champ des formulaires
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', function() {
+            checkAvailability(input.closest('form'));
+        });
+    });
+</script>
+
 <script src="js/navbar.js"></script>
 
 </body>
-
 </html>

@@ -1,9 +1,11 @@
 <?php
+
+session_start();
 // Connexion à la base de données
 include("includes/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userId = $_SESSION['user_id'];  // Cela devrait provenir de la session de l'utilisateur connecté
+    $userId = $_SESSION['id'];  // Cela devrait provenir de la session de l'utilisateur connecté
     $accommodationId = $_POST['accommodation_id'];
     $startDate = $_POST['start_date'];
     $endDate = $_POST['end_date'];

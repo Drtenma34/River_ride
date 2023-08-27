@@ -23,15 +23,6 @@ $req_accommodations = $bdd->prepare($q_accommodations);
 $req_accommodations->execute([$selected_stage]);
 $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
 
-
-// Pour chaque logement, calculez le nombre de places disponibles
-foreach ($accommodations as $key => $accommodation) {
-    $q_reservations = 'SELECT COUNT(*) as total_reservations FROM accommodation_reservations WHERE accommodation_id = ?';
-    $req_reservations = $bdd->prepare($q_reservations);
-    $req_reservations->execute([$accommodation['id']]);
-    $reservation = $req_reservations->fetch(PDO::FETCH_ASSOC);
-    $accommodations[$key]['available_places'] = $accommodation['max_pers'] - $reservation['total_reservations'];
-}
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +31,8 @@ foreach ($accommodations as $key => $accommodation) {
     <title>Gestion des logements - Back Office</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <?php include 'header_back_office.php'; ?>
@@ -53,8 +45,9 @@ foreach ($accommodations as $key => $accommodation) {
     <div class="mb-3">
         <label for="selectEtape" class="form-label">Sélectionnez une étape</label>
         <select class="form-select" id="selectEtape" name="selected_stage" onchange="this.form.submit()">
-            <?php foreach($stages as $stage): ?>
-                <option value="<?= $stage['id'] ?>" <?= ($selected_stage == $stage['id']) ? 'selected' : '' ?>><?= $stage['nom'] ?></option>
+            <?php foreach ($stages as $stage): ?>
+                <option
+                    value="<?= $stage['id'] ?>" <?= ($selected_stage == $stage['id']) ? 'selected' : '' ?>><?= $stage['nom'] ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -63,11 +56,12 @@ foreach ($accommodations as $key => $accommodation) {
     <table class="table mt-5">
         <thead>
         <tr>
-            <th>ID</th>
+            <th>#</th>
             <th>Nom</th>
+            <th>Capacité Max</th>
+            <th>Photo</th>
             <th>Adresse</th>
             <th>Prix par nuit</th>
-            <th>Places disponibles</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -75,19 +69,21 @@ foreach ($accommodations as $key => $accommodation) {
         <?php
         $accommodationNumber = 1;
 
-        foreach($accommodations as $accommodation): ?>
+        foreach ($accommodations as $accommodation): ?>
             <tr>
                 <td><?= $accommodationNumber ?></td>
                 <td><?= $accommodation['nom'] ?></td>
-                <td><?= $accommodation['adresse'] ?></td> <!-- Ligne corrigée -->
+                <td><?= $accommodation['max_pers'] ?></td>
+                <td><img src="<?= $accommodation['photo'] ?>" alt="<?= $accommodation['nom'] ?>" width="100"></td>
+                <td><?= $accommodation['adresse'] ?></td>
                 <td><?= $accommodation['price_per_night'] ?>€</td>
-                <td><?= $accommodation['available_places'] ?>/<?= $accommodation['max_pers'] ?></td>
                 <td>
                     <a href="edit_accommodation.php?id=<?= $accommodation['id'] ?>" class="btn btn-warning">Gérer</a>
-                    <a href="delete_accommodation.php?id=<?= $accommodation['id'] ?>" class="btn btn-danger">Supprimer</a>
+                    <a href="delete_accommodation.php?id=<?= $accommodation['id'] ?>"
+                       class="btn btn-danger">Supprimer</a>
                 </td>
             </tr>
-            <?php $accommodationNumber++;?>
+            <?php $accommodationNumber++; ?>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -95,7 +91,8 @@ foreach ($accommodations as $key => $accommodation) {
 
     <?php
     //fonction pour valider les données du formulaire
-    function validateFormData($data) {
+    function validateFormData($data)
+    {
         $errors = [];
 
         // Vérifiez le nom du logement
@@ -165,7 +162,7 @@ foreach ($accommodations as $key => $accommodation) {
                 <div class="mb-3">
                     <label for="selectEtape" class="form-label">Étape associée</label>
                     <select class="form-select" id="selectEtape" name="travel_stage_id">
-                        <?php foreach($stages as $stage): ?>
+                        <?php foreach ($stages as $stage): ?>
                             <option value="<?= $stage['id'] ?>"><?= $stage['nom'] ?></option>
                         <?php endforeach; ?>
                     </select>
@@ -178,7 +175,7 @@ foreach ($accommodations as $key => $accommodation) {
 
 
     <script>
-        document.getElementById('selectEtape').addEventListener('change', function() {
+        document.getElementById('selectEtape').addEventListener('change', function () {
             let stageId = this.value;
 
             fetch(`get_accommodations.php?stage_id=${stageId}`)
@@ -192,19 +189,20 @@ foreach ($accommodations as $key => $accommodation) {
 
                     data.forEach(accommodation => {
                         let row = `
-                    <tr>
-                        <!-- Affichage du numéro d'ordre du hébergement -->
-                        <td>${accommodationNumber}</td>
-                        <td>${accommodation.nom}</td>
-                        <td>${accommodation.adresse}</td>
-                        <td>${accommodation.price_per_night}€</td>
-                        <td>${accommodation.available_places}/${accommodation.max_pers}</td>
-                        <td>
-                            <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
-                            <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
-                        </td>
-                    </tr>
-                `;
+                <tr>
+                    <!-- Affichage du numéro d'ordre du hébergement -->
+                    <td>${accommodationNumber}</td>
+                    <td>${accommodation.nom}</td>
+                    <td>${accommodation.max_pers}</td>
+                    <td><img src="${accommodation.photo}" alt="${accommodation.nom}" width="100"></td>
+                    <td>${accommodation.adresse}</td>
+                    <td>${accommodation.price_per_night}€</td>
+                    <td>
+                        <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
+                        <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+            `;
 
                         tableBody.innerHTML += row;
 
@@ -213,5 +211,6 @@ foreach ($accommodations as $key => $accommodation) {
                     });
                 });
         });
-
     </script>
+
+

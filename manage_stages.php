@@ -35,6 +35,7 @@ $stages = $req->fetchAll();
     <table class="table">
         <thead>
         <tr>
+            <th>#</th>
             <th>Nom</th>
             <th>Photo</th>
             <th>Actions</th>
@@ -63,6 +64,7 @@ $stages = $req->fetchAll();
         <?php endforeach; ?>
         </tbody>
     </table>
+
 
 
     <!-- Début de la partie "Ajouter une étape" -->
