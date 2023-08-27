@@ -95,7 +95,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[1]; ?>" alt="Photo de l'hôtel proche de Chenonceau"
+                <img src="images_accommodations/hotel_chenonceaux_64eac3aa729e7.jpg" alt="Photo de l'hôtel proche de Chenonceau"
                      width="300">
                 <h6>Hôtel proche de Chenonceau</h6>
                 <p>Un établissement historique avec un charme d'antan, des jardins luxuriants et une vue imprenable sur
@@ -113,7 +113,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[2]; ?>" alt="Photo de l'hôtel à Amboise" width="300">
+                <img src="images_accommodations/hotel-amboise_64eac07d4910d.jpg" alt="Photo de l'hôtel à Amboise" width="300">
                 <h6>Hôtel à Amboise</h6>
                 <p>Un palace élégant au cœur d'Amboise, à quelques minutes à pied du château et du Clos Lucé, offrant un
                     confort haut de gamme.</p>
@@ -181,7 +181,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[0]; ?>" alt="Photo de l'auberge proche de Chambord"
+                <img src="images_accommodations/image_auberge_chambord_64eab71fec3fb.jpg" alt="Photo de l'auberge proche de Chambord"
                      width="300">
                 <h6>Auberge proche de Chambord</h6>
                 <p>Une auberge chaleureuse et accueillante offrant des chambres confortables et une cuisine locale
@@ -199,7 +199,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[1]; ?>" alt="Photo de la maison d'hôtes près de Chenonceau"
+                <img src="images_accommodations/auberge_chenonceau_64eac3ce7ddb7.jpg" alt="Photo de la maison d'hôtes près de Chenonceau"
                      width="300">
                 <h6>Maison d'hôtes près de Chenonceau</h6>
                 <p>Une maison d'hôtes traditionnelle avec des chambres douillettes, un jardin pour se détendre et un
@@ -217,7 +217,7 @@ try {
             </div>
 
             <div>
-                <img src="<?php echo $accommodationPhotos[2]; ?>" alt="Photo des chambres d'hôte à Amboise" width="300">
+                <img src="images_accommodations/auberge-amboise_64eac09f42459.jpeg" alt="Photo des chambres d'hôte à Amboise" width="300">
                 <h6>Chambres d'hôte à Amboise</h6>
                 <p>Un hébergement familial situé dans le centre historique d'Amboise, à proximité des principales
                     attractions.</p>
@@ -313,3 +313,4 @@ try {
 
 </body>
 </html>
+
