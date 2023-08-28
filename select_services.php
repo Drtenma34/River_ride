@@ -36,32 +36,43 @@ if (!empty($selected_hotels)) {
         <h2>Services supplémentaires</h2>
         <p>Choisissez des suppléments de bagage pour vos réservations d'hôtel.</p>
         
-        <form action="checkout.php" method="post"> <!-- Assuming there's a page named finalize_booking.php where the booking will be finalized -->
-            <?php
-            foreach ($hotel_details as $hotel) {
-                echo '<div class="hotel-section">';
-                echo '<h3>' . $hotel['nom'] . '</h3>';
-                echo '<p>Adresse: ' . $hotel['adresse'] . '</p>';
-                echo '<p>Réservé du ' . $dates[$hotel['id']]['from'] . ' au ' . $dates[$hotel['id']]['to'] . '</p>';
-                
-                echo '<div class="baggage-option">';
-                echo '<label>Supplément bagage: ';
-                echo '<select name="baggage_supplement[' . $hotel['id'] . ']">';
-                echo '<option value="0">Aucun</option>';
-                echo '<option value="10">10€ - 10kg supplémentaires</option>';
-                echo '<option value="20">20€ - 20kg supplémentaires</option>';
-                echo '</select>';
-                echo '</label>';
-                echo '</div>';
 
-                echo '</div>';
-            }
-            ?>
+<form action="checkout.php" method="post">
+    <?php
+    foreach ($hotel_details as $hotel) {
+        
+        echo '<div class="hotel-section">';
+        echo '<h3>' . $hotel['nom'] . '</h3>';
+        echo '<p>Adresse: ' . $hotel['adresse'] . '</p>';
+        echo '<p>Réservé du ' . $dates[$hotel['id']]['from'] . ' au ' . $dates[$hotel['id']]['to'] . '</p>';
 
-            <div style="text-align: center; margin-top: 20px;">
-                <input type="submit" value="Finaliser la réservation">
-            </div>
-        </form>
+        // Add hidden fields for dates to be sent to checkout.php
+        echo '<input type="hidden" name="dates[' . $hotel['id'] . '][from]" value="' . $dates[$hotel['id']]['from'] . '">';
+        echo '<input type="hidden" name="dates[' . $hotel['id'] . '][to]" value="' . $dates[$hotel['id']]['to'] . '">';
+        echo '<input type="hidden" name="hotel_price[' . $hotel['id'] . ']" value="' . $hotel['price_per_night'] . '">';
+
+
+        echo '<div class="baggage-option">';
+        echo '<label>Supplément bagage: ';
+        echo '<select name="baggage_supplement[' . $hotel['id'] . ']">';
+        echo '<option value="0">Aucun</option>';
+        echo '<option value="10">10€ - 10kg supplémentaires</option>';
+        echo '<option value="20">20€ - 20kg supplémentaires</option>';
+        echo '</select>';
+        echo '</label>';
+        echo '</div>';
+
+        echo '</div>';
+    }
+    ?>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <input type="submit" value="Finaliser la réservation">
+    </div>
+</form>
+
+
+
 
     </main>
     <footer>
