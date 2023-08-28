@@ -8,6 +8,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $numberOfPeople = $_POST['number_of_people'];
     $packType = $_POST['packType'];
 
+    // Vérifiez si toutes les données nécessaires ont été fournies
+    if (!$startDate || !$endDate || !$numberOfPeople || !$packType) {
+        echo json_encode([
+            "status" => "error",
+            "message" => "Veuillez remplir tous les champs."
+        ]);
+        exit;
+    }
+
     $accommodations = [];
     if ($packType == "Royal") {
         $accommodations = [

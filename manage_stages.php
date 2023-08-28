@@ -54,7 +54,7 @@ $stages = $req->fetchAll();
                 <td><img src="<?= $stage['photo'] ?>" alt="<?= $stage['nom'] ?>" width="100"></td>
                 <td>
                     <!-- Bouton pour modifier -->
-                    <a href="edit_travel_stage.php?id=<?= $stage['id'] ?>" class="btn btn-warning">Modifier</a>
+                    <a href="edit_travel_stage.php?id=<?= $stage['id'] ?>" class="btn btn-warning">Éditer infos</a>
                     <!-- Bouton pour supprimer -->
                     <a href="delete_stage.php?id=<?= $stage['id'] ?>" class="btn btn-danger">Supprimer</a>
                 </td>

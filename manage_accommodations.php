@@ -78,7 +78,7 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $accommodation['adresse'] ?></td>
                 <td><?= $accommodation['price_per_night'] ?>€</td>
                 <td>
-                    <a href="edit_accommodation.php?id=<?= $accommodation['id'] ?>" class="btn btn-warning">Gérer</a>
+                    <a href="edit_accommodation.php?id=<?= $accommodation['id'] ?>" class="btn btn-warning">Éditer infos</a>
                     <a href="delete_accommodation.php?id=<?= $accommodation['id'] ?>"
                        class="btn btn-danger">Supprimer</a>
                 </td>
@@ -198,7 +198,7 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
                     <td>${accommodation.adresse}</td>
                     <td>${accommodation.price_per_night}€</td>
                     <td>
-                        <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Gérer</a>
+                        <a href="edit_accommodation.php?id=${accommodation.id}" class="btn btn-warning">Éditer infos</a>
                         <a href="delete_accommodation.php?id=${accommodation.id}" class="btn btn-danger">Supprimer</a>
                     </td>
                 </tr>

@@ -60,11 +60,14 @@ try {
                 Pack "Royal"<img src="images/royal-crown-of-sharp-black-design-svgrepo-com.svg" alt="Icône Royal"
                                  width="30" height="30">
             </h3>
+            <div class="d-flex justify-content-between">
+            <h5>Profitez des visites des plus beaux châteaux de la Loire en logeant dans des hôtels luxueux.</h5>
+            <p>Réservation possible pour groupe de 1 à 8 personnes.</p>
+            </div>
             <button class="btn btn-primary" onclick="toggleContent('detailsRoyal')">Voir détails</button>
         </div>
         <div id="detailsRoyal" style="display: none;">
-            <h5>Profitez des visites des plus beaux châteaux de la Loire en logeant dans des hôtels luxueux.</h5>
-            <p>Réservation possible pour groupe de 1 à 8 personnes.</p>
+
             <h5>Étapes :</h5>
 
             <!-- Château de Chambord -->
@@ -144,8 +147,11 @@ try {
                         <input type="hidden" name="accommodation_id_chenonceau" value="18">
                         <input type="hidden" name="accommodation_id_amboise" value="19">
                         <input type="hidden" name="packType" value="Royal">
+                        <input type="hidden" name="availabilityChecked" value="0" id="availabilityCheckedRoyal">
 
                         <div id="availabilityMessage"></div>
+                        <button type="submit" class="btn btn-success">Réserver</button>
+
                     </form>
 
                 </div>
@@ -252,9 +258,11 @@ try {
                         <input type="hidden" name="accommodation_id_chenonceau" value="21">
                         <input type="hidden" name="accommodation_id_amboise" value="22">
                         <input type="hidden" name="packType" value="Seigneur">
-
+                        <input type="hidden" name="availabilityChecked" value="0" id="availabilityCheckedSeigneur">
 
                         <div id="availabilityMessage"></div>
+                        <button type="submit" class="btn btn-success">Réserver</button>
+
                     </form>
                 </div>
             </section>
@@ -291,9 +299,11 @@ try {
                 if (data.status === "success") {
                     messageElement.textContent = data.message;
                     messageElement.style.color = "green";
+                    formElement.querySelector('[name="availabilityChecked"]').value = "1"; // mise à jour de la valeur
                 } else {
                     messageElement.textContent = data.message;
                     messageElement.style.color = "red";
+                    formElement.querySelector('[name="availabilityChecked"]').value = "0"; // reset de la valeur
                 }
             })
             .catch(error => {
@@ -301,10 +311,19 @@ try {
             });
     }
 
-    // Attacher l'événement `onchange` à chaque champ des formulaires
+    // Il faut que je rajoute l'événement `onchange` à chaque champ des formulaires
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('change', function() {
             checkAvailability(input.closest('form'));
+        });
+    });
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            let availabilityCheckedInput = form.querySelector('[name="availabilityChecked"]');
+            if (availabilityCheckedInput.value !== "1") {
+                event.preventDefault();
+                alert('Veuillez vérifier la disponibilité avant de réserver.');
+            }
         });
     });
 </script>
