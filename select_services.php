@@ -1,4 +1,25 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $currentDate = new DateTime();  // La date d'aujourd'hui
+    $invalidDates = false;
+
+    foreach ($_POST['dates'] as $hotelId => $dates) {
+        $fromDate = new DateTime($dates['from']);
+        $toDate = new DateTime($dates['to']);
+
+        if ($fromDate < $currentDate || $toDate < $currentDate) {
+            $invalidDates = true;
+            break;  // Sortir de la boucle dès qu'une date invalide est trouvée
+        }
+    }
+
+    if ($invalidDates) {
+        die("Au moins une de vos dates est antérieure à la date d'aujourd'hui.");
+    }
+
+    // ... Continuez le traitement des données ...
+}
+
 include("includes/db.php");  // Assuming that the file `db.php` initializes a PDO connection
 
 // Get selected hotels and dates from the POST data

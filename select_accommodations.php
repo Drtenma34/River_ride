@@ -32,7 +32,17 @@ if (!empty($selected_stages)) {
             margin-top: 10px;
         }
     </style>
+    <script>
+    window.onload = function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.setAttribute('min', today);
+        });
+    };
+</script>
+
 </head>
+
 <body>
     <?php include("includes/header_menu.php"); ?>
     <main>
