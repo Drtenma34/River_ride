@@ -1,0 +1,20 @@
+
+
+/*CSS pour les en-têtes*/
+
+.header-row {
+    display: flex;
+    border-bottom: 2px solid #333;
+}
+
+.header-cell {
+    width: 3%; /* Avec 31 jours, chaque cellule prend 3% de la largeur totale. */
+    text-align: center;
+    padding: 5px 0;
+    font-weight: bold;
+}
+
+
+
+
+

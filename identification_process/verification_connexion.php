@@ -39,6 +39,12 @@ if (!password_verify($password, $users[0]['password'])) {
     exit;
 }
 
+// Vérification si l'utilisateur est banni
+if ($users[0]['is_banned'] == 1) {
+    header('location: connexion.php?message=Vous avez été banni. Vous ne pouvez pas vous connecter.');
+    exit;
+}
+
 if ($users[0]['is_valid']!= 1){
     $confirmed_key = $users[0]['confirmed_key'];
     header('location: connexion.php?message=Votre mail n\'est pas confirmé, mail réenvoyé');

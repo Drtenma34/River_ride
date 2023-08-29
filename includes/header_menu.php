@@ -58,8 +58,8 @@ session_start();
             </div>
             <!--Barre AJAX-->
             <?php
-            include ("includes/db.php");
-            ?>
+/*            include ("includes/db.php");
+            */?><!--
             <div class="row height d-flex justify-content-center align-items-center">
                 <div class="form">
                     <i class="fa fa-search"></i>
@@ -67,7 +67,7 @@ session_start();
                     <div class="list-group list-group-item-action" id="content">
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!--Barre AJAX-->
         </div>
     </nav>

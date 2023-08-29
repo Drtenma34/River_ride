@@ -12,10 +12,13 @@
                     <a class="nav-link <?= ($current_page == 'manage_accommodations.php' ? 'active' : '') ?>" aria-current="page" href="manage_accommodations.php">Logements</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= ($current_page == 'promos.php' ? 'active' : '') ?>" href="graph_resa.php">Occupation des logements</a>
+                    <a class="nav-link <?= ($current_page == 'graph_resa.php' ? 'active' : '') ?>" href="graph_resa.php">Occupation des logements</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($current_page == 'promos.php' ? 'active' : '') ?>" href="promos.php">Offres promotionnelles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= ($current_page == 'manage_users.php' ? 'active' : '') ?>" href="manage_users.php">Utilisateurs</a>
                 </li>
 
                 <!-- Ajoutez d'autres liens de navigation si nécessaire -->

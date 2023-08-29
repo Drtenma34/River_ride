@@ -1,4 +1,10 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 include("includes/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -43,6 +49,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $nightsPerAccommodation = floor($numNights / 3);
 
+    // Tableau pour stocker les messages d'erreur pour chaque hébergement complet
+    $fullAccommodations = [];
+
+
     // Vérification de chaque hébergement
     foreach ($accommodations as $index => $accommodationId) {
         $checkIn = date('Y-m-d', strtotime($startDate . "+$index days"));
@@ -52,6 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $query = $bdd->prepare("SELECT max_pers FROM accommodations WHERE id = ?");
         $query->execute([$accommodationId]);
         $accommodation = $query->fetch(PDO::FETCH_ASSOC);
+        /*
+         * Résultat de la query :
+
+         * le nombre total de personnes ayant déjà réservé cet hébergement pour la période spécifiée) sont
+         * récupérés sous forme d'association*/
+
 
         if (!$accommodation || $numberOfPeople > $accommodation['max_pers']) {
             echo json_encode([
@@ -75,18 +91,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $totalPeople = $existingReservations['total_people'] + $numberOfPeople;
 
         if ($totalPeople > $accommodation['max_pers']) {
-            echo json_encode([
-                "status" => "error",
-                "message" => "L'hébergement est complet pour les dates $checkIn à $checkOut."
-            ]);
-            exit;
+            $query = $bdd->prepare("SELECT nom FROM accommodations WHERE id = ?");
+            $query->execute([$accommodationId]);
+            $accommodationName = $query->fetchColumn();
+
+            $fullAccommodations[] = "L'hébergement '$accommodationName' est complet pour les dates $checkIn à $checkOut.";
         }
     }
 
-    // Si tout est bon
+    if (count($fullAccommodations) > 0) {
+        echo json_encode([
+            "status" => "error",
+            "message" => implode(" ", $fullAccommodations) . " Nous vous recommandons de composer votre itinéraire vous-même en choisissant votre hébergement et vos étapes de manière personnalisée dans le portail 'composer son propre parcours' pour plus de flexibilité."
+        ]);
+        exit;
+    }
+
+// Si tout est bon
     echo json_encode([
         "status" => "success",
         "message" => "Les hébergements sont disponibles pour les dates choisies."
     ]);
 }
-?>

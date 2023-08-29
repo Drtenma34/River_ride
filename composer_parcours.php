@@ -1,99 +1,56 @@
-<?php
-include("includes/db.php");  // Assurez-vous que le fichier `db.php` initialise une connexion PDO et non MySQLi
-
-try {
-    $stmt = $bdd->prepare("SELECT * FROM travel_stages");
-    $stmt->execute();
-
-    $stages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Erreur: " . $e->getMessage());
-}
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sélection des étapes</title>
-    <?php include("includes/head.php"); ?>
-    <style>
-        /* Styles améliorés */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 20px;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 
-        .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform .2s;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #fff;
-            width: 220px;
-            text-align: center;
-        }
-
-        .card:hover {
-            transform: scale(1.05);
-        }
-
-        img.card-img-top {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .card-title {
-            font-weight: bold;
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-
-        .card-text {
-            margin-bottom: 20px;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            padding: 10px 0;
-            background-color: #333;
-            color: #fff;
-        }
-    </style>
 </head>
 <body>
-    <?php include("includes/header_menu.php"); ?>
-    <main>
-        <form action="select_accommodations.php" method="post" class="card-container">
-            <?php
-            foreach ($stages as $row) {
-                echo '<div class="card">';
-                echo '<img class="card-img-top" src="' . $row['photo'] . '" alt="' . $row['nom'] . '">';
-                echo '<h3 class="card-title">' . $row['nom'] . '</h3>';
-                echo '<p class="card-text">' . $row['description'] . '</p>';
-                echo '<label><input type="checkbox" name="selected_stages[]" value="' . $row['id'] . '"> Sélectionner</label>';
-                echo '</div>';
-            }
-            ?>
-            <div style="width: 100%; text-align: center;">
-                <input type="submit" value="Continuer">
-            </div>
-        </form>
-    </main>
-    <footer>
-        <p>&copy; 2023 Tous droits réservés.</p>
-    </footer>
 
-    <script src="js/navbar.js"></script>
+<?php include("includes/header_menu.php"); ?>
+
+
+
+<div class="content-wrapper">
+    <main class="container mt-5">
+    <h2 class="mb-4">Sélection des étapes</h2>
+    <form action="select_accommodations.php" method="post">
+        <?php
+
+        include ("includes/db.php");
+
+        try {
+            $stmt = $bdd->prepare("SELECT * FROM travel_stages");
+            $stmt->execute();
+
+            $stages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die("Erreur: " . $e->getMessage());
+        }
+
+        foreach ($stages as $row) {
+            echo '<section class="mb-4">';
+            echo '<div class="d-flex align-items-center">';
+            echo '<img src="' . $row['photo'] . '" alt="' . $row['nom'] . '" width="100" height="100" class="me-3 rounded-circle">';
+            echo '<div>';
+            echo '<h4>' . $row['nom'] . '</h4>';
+            echo '<p>' . $row['description'] . '</p>';
+            echo '<label class="form-check"><input type="checkbox" class="form-check-input" name="selected_stages[]" value="' . $row['id'] . '"> Sélectionner</label>';
+            echo '</div>';
+            echo '</div>';
+            echo '</section>';
+        }
+        ?>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Continuer</button>
+        </div>
+    </form>
+</main>
+
+</div>
+
 </body>
 </html>

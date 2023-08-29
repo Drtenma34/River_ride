@@ -19,8 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_POST['accommodation_id_chenonceau'],
             $_POST['accommodation_id_amboise']
         ];
+    } elseif ($packType == "Seigneur") {
+        $accommodations = [
+            $_POST['accommodation_id_chambord'],
+            $_POST['accommodation_id_chenonceau'],
+            $_POST['accommodation_id_amboise']
+        ];
     }
-    // (ajoutez d'autres conditions pour d'autres types de pack si nécessaire)
 
     foreach ($accommodations as $accommodationId) {
         // Vérification de la capacité de l'hébergement
@@ -47,7 +52,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $totalPeople = $existingReservations['total_people'] + $numberOfPeople;
 
         if ($totalPeople > $accommodation['max_pers']) {
-            echo "L'hébergement est complet pendant la période choisie.";
+
+            // Récupérer le nom de l'hébergement
+            $query = $bdd->prepare("SELECT nom FROM accommodations WHERE id = ?");
+            $query->execute([$accommodationId]);
+            $accommodationName = $query->fetchColumn();
+
+            // Afficher le message d'erreur avec le nom de l'hébergement et les dates
+            echo "L'hébergement '$accommodationName' est complet pour les dates $checkIn à $checkOut.";
             exit;
         }
 
@@ -67,4 +79,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Réservation effectuée avec succès pour tous les hébergements!";
 }
 
-?>

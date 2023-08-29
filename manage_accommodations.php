@@ -95,17 +95,15 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
     {
         $errors = [];
 
-        // Vérifiez le nom du logement
+        // Vérification du nom
         if (empty($data['nom'])) {
             $errors[] = "Le nom du logement est requis.";
         }
 
-        // Vérifiez l'adresse
+        // Vérification de l'adresse
         if (empty($data['adresse'])) {
             $errors[] = "L'adresse est requise.";
         }
-
-        // ... Ajoutez d'autres vérifications ici ...
 
         return $errors;
     }
@@ -114,7 +112,7 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors = validateFormData($_POST);
         if (empty($errors)) {
-            // Si tout est valide, redirigez vers add_accommodation.php pour l'insertion dans la base de données
+
             header('Location: add_accommodation.php');
             exit;
         }
@@ -137,7 +135,7 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="card-body">
             <!-- Formulaire pour ajouter un logement -->
-            <form action="add_accommodation.php" method="post" enctype="multipart/form-data">
+            <form action="add_accommodation.php" method="post">
                 <div class="mb-3">
                     <label for="nom" class="form-label">Nom du logement</label>
                     <input type="text" class="form-control" id="nom" name="nom" required>
@@ -154,11 +152,6 @@ $accommodations = $req_accommodations->fetchAll(PDO::FETCH_ASSOC);
                     <label for="price_per_night" class="form-label">Prix par nuit (€)</label>
                     <input type="number" class="form-control" id="price_per_night" name="price_per_night" required>
                 </div>
-                <div class="mb-3">
-                    <label for="photo" class="form-label">Photo du logement</label>
-                    <input type="file" class="form-control" id="photo" name="photo">
-                </div>
-
                 <div class="mb-3">
                     <label for="selectEtape" class="form-label">Étape associée</label>
                     <select class="form-select" id="selectEtape" name="travel_stage_id">

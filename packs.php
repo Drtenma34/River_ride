@@ -16,26 +16,13 @@
 <?php
 include('includes/header_menu.php');
 include("includes/db.php");
+?>
 
-// Assurer que l'utilisateur est connecté
+//élément pour stocker l'état de connexion de l'utilisateur
+<input type="hidden" id="isUserLoggedIn" value="<?php echo isset($_SESSION['id']) ? 'true' : 'false'; ?>">
 
-if (!isset($_SESSION['id'])) {
-    echo "Vous devez être connecté pour effectuer une réservation.";
-    exit();
-}
-
-try {
-    $accommodationsQuery = $bdd->prepare(
-        "SELECT photo 
-            FROM accommodations
-            WHERE photo IS NOT NULL;"
-    );
-    $accommodationsQuery->execute();
-    $accommodationPhotos = $accommodationsQuery->fetchAll(PDO::FETCH_COLUMN);
-} catch (PDOException $e) {
-    echo $e->getMessage();
-}
-
+//On recup les photos des stages.
+<?php
 try {
     $stagesQuery = $bdd->prepare(
         "SELECT photo 
@@ -50,6 +37,8 @@ try {
 ?>
 
 
+
+
 <main class="container mt-5">
     <h2 class="big-title">Nos Packs</h2>
 
@@ -62,7 +51,6 @@ try {
             </h3>
             <div class="d-flex justify-content-between">
             <h5>Profitez des visites des plus beaux châteaux de la Loire en logeant dans des hôtels luxueux.</h5>
-            <p>Réservation possible pour groupe de 1 à 8 personnes.</p>
             </div>
             <button class="btn btn-primary" onclick="toggleContent('detailsRoyal')">Voir détails</button>
         </div>
@@ -126,8 +114,9 @@ try {
                 <div class="d-flex justify-content-between">
 
                     <!-- Form pour le Pack Royal -->
-                    <form action="register_acco_reservations.php" method="post" class="mt-3">
-                        <h4>Réserver le Pack "Royal"</h4>
+                    <form action="register_acco_reservations.php" method="post" id="formRoyal" class="mt-3" onsubmit="return handleFormSubmission(this);">
+
+                    <h4>Réserver le Pack "Royal"</h4>
                         <div class="mb-3">
                             <label for="startDateRoyal" class="form-label">Date de début :</label>
                             <input type="date" class="form-control" id="startDateRoyal" name="start_date"
@@ -147,7 +136,7 @@ try {
                         <input type="hidden" name="accommodation_id_chenonceau" value="18">
                         <input type="hidden" name="accommodation_id_amboise" value="19">
                         <input type="hidden" name="packType" value="Royal">
-                        <input type="hidden" name="availabilityChecked" value="0" id="availabilityCheckedRoyal">
+                        <input type="hidden" name="availability" value="0" id="availabilityRoyal">
 
                         <div id="availabilityMessage"></div>
                         <button type="submit" class="btn btn-success">Réserver</button>
@@ -167,13 +156,14 @@ try {
             <h3>
                 Pack "Seigneur"
                 <img src="images/castle-svgrepo-com.svg" alt="Icône Royal" width="30" height="30">
+                <h5>Profitez des visites des plus beaux châteaux de la Loire tout en logeant dans des lieux
+                    confortables.</h5>
             </h3>
             <button class="btn btn-primary" onclick="toggleContent('detailsSeigneur')">Voir détails</button>
         </div>
         <div id="detailsSeigneur" style="display: none;">
-            <h5>Profitez des visites des plus beaux châteaux de la Loire tout en logeant dans des lieux
-                confortables.</h5>
-            <p>Réservation possible pour groupe de 1 à 8 personnes.</p>
+
+
             <h5>Étapes :</h5>
 
             <!-- Château de Chambord -->
@@ -234,8 +224,8 @@ try {
 
 
                     <!-- Form pour le Pack Seigneur -->
-                    <form action="register_acco_reservations.php" method="post" class="mt-3">
-                        <h4>Réserver le Pack "Seigneur"</h4>
+                    <form action="register_acco_reservations.php" method="post" id="formSeigneur" class="mt-3" onsubmit="return handleFormSubmission(this);">
+                    <h4>Réserver le Pack "Seigneur"</h4>
                         <div class="mb-3">
                             <label for="dateSeigneurStart" class="form-label">Date de début :</label>
                             <input type="date" class="form-control" id="dateSeigneurStart" name="start_date"
@@ -258,7 +248,7 @@ try {
                         <input type="hidden" name="accommodation_id_chenonceau" value="21">
                         <input type="hidden" name="accommodation_id_amboise" value="22">
                         <input type="hidden" name="packType" value="Seigneur">
-                        <input type="hidden" name="availabilityChecked" value="0" id="availabilityCheckedSeigneur">
+                        <input type="hidden" name="availability" value="0" id="availabilitySeigneur">
 
                         <div id="availabilityMessage"></div>
                         <button type="submit" class="btn btn-success">Réserver</button>
@@ -283,6 +273,7 @@ try {
 </script>
 
 <script>
+
     function checkAvailability(formElement) {
         // Récupération des données du formulaire
         let formData = new FormData(formElement);
@@ -299,11 +290,11 @@ try {
                 if (data.status === "success") {
                     messageElement.textContent = data.message;
                     messageElement.style.color = "green";
-                    formElement.querySelector('[name="availabilityChecked"]').value = "1"; // mise à jour de la valeur
+                    formElement.querySelector('[name="availability"]').value = "1";
                 } else {
                     messageElement.textContent = data.message;
                     messageElement.style.color = "red";
-                    formElement.querySelector('[name="availabilityChecked"]').value = "0"; // reset de la valeur
+                    formElement.querySelector('[name="availability"]').value = "0";
                 }
             })
             .catch(error => {
@@ -311,21 +302,32 @@ try {
             });
     }
 
-    // Il faut que je rajoute l'événement `onchange` à chaque champ des formulaires
-    document.querySelectorAll('input').forEach(input => {
-        input.addEventListener('change', function() {
-            checkAvailability(input.closest('form'));
-        });
+    // Écouteurs d'événements pour les modifications du formulaire
+    document.getElementById('formRoyal').addEventListener('change', function() {
+        checkAvailability(this);
     });
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function(event) {
-            let availabilityCheckedInput = form.querySelector('[name="availabilityChecked"]');
-            if (availabilityCheckedInput.value !== "1") {
-                event.preventDefault();
-                alert('Veuillez vérifier la disponibilité avant de réserver.');
-            }
-        });
+
+    document.getElementById('formSeigneur').addEventListener('change', function() {
+        checkAvailability(this);
     });
+
+    function handleFormSubmission(form) {
+        let isUserLoggedIn = document.getElementById('isUserLoggedIn').value;
+
+        if (isUserLoggedIn === 'false') {
+            window.location.href = 'identification_process/connexion.php';  // Redirige vers la page de connexion
+            return false;  // Empêche la soumission du formulaire
+        }
+
+        let availabilityInput = form.querySelector('[name="availability"]');
+        if (availabilityInput.value !== "1") {
+            alert('Vous ne pouvez que réserver à une période où des c\'est possible.');
+            return false;  // Empêche la soumission du formulaire
+        }
+
+        return true;  // Autorise la soumission du formulaire
+    }
+
 </script>
 
 <script src="js/navbar.js"></script>
